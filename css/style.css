@@ -1,0 +1,28 @@
+.main td {
+	border: 1px solid black;
+}
+
+#stats {
+	width: 250px;
+	height: 500px;
+	text-align: left;
+	vertical-align: top;
+}
+
+#animation {
+	width: 400px;
+	height: 500px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#control-panel {
+	width: 650px;
+	height: 100px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.stats-table td {
+	border-width: 0px;
+}

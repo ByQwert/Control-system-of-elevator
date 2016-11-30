@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hello, World!</title>
+	<title>Elevator</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
 </head>
+<div id="generate" title="Generate system">
+	<form>
+		Amount of floors:<input type="text" name="floors">
+		<br>
+		Amount of humans:<input type="text" name="humans">
+	</form>
+</div>
 <body>
-<h1>Hello, world!</h1>
-via Git
-<p><a href="https://github.com/ByQwert">ByQ</a></p>
+	<div>
+		<table class="main">
+			<tr>
+				<td id="stats">
+					<table class="stats-table" style="display:none">
+						<tr>
+							<td>Amount of floors:</td>
+							<td id="amount-of-floors"></td>
+						</tr>
+						<tr>
+							<td>Amount of humans:</td>
+							<td id="amount-of-humans"></td>
+						</tr>
+					</table>
+				</td>
+				<td id="animation">Animation</td>
+			</tr>
+			<tr>
+				<td id="control-panel" colspan="2">Buttons</td>
+			</tr>
+		</table>
+	</div>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
