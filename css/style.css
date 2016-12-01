@@ -1,5 +1,6 @@
 .main td {
 	border: 1px solid black;
+	font: 14pt sans-serif;
 }
 
 #stats {
@@ -23,6 +24,16 @@
 	vertical-align: middle;
 }
 
-.stats-table td {
+#stats-table td {
 	border-width: 0px;
+}
+
+#humanity {
+	width: 100%;
+	height: 85%;
+	overflow: auto;
+}
+
+#humanity p {
+  font: 12pt sans-serif; 
 }
