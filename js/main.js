@@ -1,25 +1,47 @@
- // GUI
- $( "#generate" ).dialog({
- 	resizable: false,
- 	height: "auto",
- 	width: 400,
- 	modal: true,
- 	buttons: {
- 		"Generate": function() {
- 			if ($('input[name="floors"]').val() > 0 && $('input[name="humans"]').val() > 0) {
- 				$( this ).dialog( "close" );
- 				mainFrame.generate($('input[name="floors"]').val(),$('input[name="humans"]').val());
- 			} else {	
- 				alert("Invalid data!");
- 			}        
- 		},
- 		"Cancel": function() {
- 			$( this ).dialog( "close" );
- 		}
- 	}
- });
+// Init
+var mainFrame = new MainFrame();
+var humanity = [],
+names = ["Bob","Tom", "Mike", "Sam", "Jack", "Steve", "Anton"];
 
-// Add
+// GUI
+$( "#generate-form" ).dialog({
+	resizable: false,
+	height: "auto",
+	width: 400,
+	modal: true,
+	buttons: {
+		"Generate": function() {
+			if ($('input[name="floors"]').val() > 0 && $('input[name="humans"]').val() > 0) {
+				$( this ).dialog( "close" );
+				mainFrame.generate($('input[name="floors"]').val(),$('input[name="humans"]').val());
+			} else {	
+				alert("Invalid data!");
+			}        
+		},
+		"Cancel": function() {
+			$( this ).dialog( "close" );
+		}
+	}
+});
+
+function openAddHumanForm() {
+	$( "#add-human-form" ).dialog("open");
+}
+
+dialog = $( "#add-human-form" ).dialog({
+  autoOpen: false,
+  height: 400,
+  width: 350,
+  modal: true,
+  buttons: {
+   	"Add account": mainFrame.addHuman, 
+    Cancel: function() {
+      $( this ).dialog( "close" );
+    }
+   },
+});
+
+// Additional
 function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -57,7 +79,8 @@ function MainFrame() {
 	};
 	this.stopSystem = function() {
 	};
-	this.createHuman = function() {
+	this.addHuman = function() {
+		dialog.dialog("close");
 	}
 }
 
@@ -94,7 +117,3 @@ function Human(name, weight, spawnFloor, targetFloor) {
 	this.state = "Waiting for elevator on floor ";
 }
 
-// Init
-var mainFrame = new MainFrame();
-var humanity = [],
-names = ["Bob","Tom", "Mike", "Sam", "Jack", "Steve", "Anton"];
