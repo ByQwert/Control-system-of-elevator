@@ -1,4 +1,8 @@
 // Init
+var settings = {
+	minWeight: 50,
+	maxWeight: 100
+};
 var mainFrame = new MainFrame();
 var humanity = [],
 names = ["Bob","Tom", "Mike", "Sam", "Jack", "Steve", "Anton"];
@@ -13,7 +17,7 @@ $( "#generate-form" ).dialog({
 		"Generate": function() {
 			if ($('input[name="floors"]').val() > 0 && $('input[name="humans"]').val() > 0) {
 				$( this ).dialog( "close" );
-				mainFrame.generate($('input[name="floors"]').val(),$('input[name="humans"]').val());
+				mainFrame.generate(+$('input[name="floors"]').val(),+$('input[name="humans"]').val());
 			} else {	
 				alert("Invalid data!");
 			}        
@@ -49,26 +53,25 @@ function getRandomInt(min, max) {
 // Classes
 function MainFrame() {
 	this.generate = function(floors,humans) {
-		//console.log(floors,humans);
 		house = new House(floors,humans);
+		elevator = new Elevator();
+
 		for (var i = 0; i < house.amountOfHumans; i++) {
 			name = names[getRandomInt(0,names.length-1)];
-			weight = getRandomInt(50,100);
+			weight = getRandomInt(settings.minWeight,settings.maxWeight);
 			spawnFloor = getRandomInt(1,house.amountOfFloors);				
 			do {
 				targetFloor = getRandomInt(1,house.amountOfFloors);
 			} while(spawnFloor == targetFloor);
 			humanity.push(new Human(name,weight,spawnFloor,targetFloor));
-		}
-		elevator = new Elevator();
-		//$("#stats").text("");
+		}		
+		// GUI
 		$("#amount-of-floors").text(house.amountOfFloors);
-		$("#amount-of-humans").text(house.amountOfHumans);
-		$("#stats-table").show();			
+		$("#amount-of-humans").text(house.amountOfHumans);		
 		for (var i = 0; i < house.amountOfHumans; i++) {
 			$("#humanity").append('<h6>' + humanity[i].name + '</h6><p>' + humanity[i].state + humanity[i].spawnFloor + '</p>');
 		}		
-		$("#humanity").show();	
+		$("#main-table").show();	
 		$( "#humanity" ).accordion({
  			collapsible: true,
  			active: false
@@ -78,9 +81,29 @@ function MainFrame() {
 		
 	};
 	this.stopSystem = function() {
+
 	};
 	this.addHuman = function() {
-		dialog.dialog("close");
+		var validator = true;
+		name = $("[name=name]").val();
+		weight = +$("[name=weight]").val();
+		spawnFloor = +$("[name=spawnFloor]").val();
+		if (spawnFloor < 1 || spawnFloor > house.amountOfFloors) {
+			validator = false;
+		} 
+		targetFloor = +$("[name=targetFloor]").val(); 
+		if (targetFloor < 1 || targetFloor > house.amountOfFloors || targetFloor == spawnFloor) {
+			validator = false;
+		} 
+		if (validator) {
+			humanity.push(new Human(name,weight,spawnFloor,targetFloor));
+			$("#humanity").append('<h6>' + humanity[humanity.length-1].name + '</h6><p>' + humanity[humanity.length-1].state + humanity[humanity.length-1].spawnFloor + '</p>');
+			$( "#humanity" ).accordion( "refresh" );
+			dialog.dialog("close");
+		} else {
+			alert("Invalid data!");
+			validator = true;
+		}		
 	}
 }
 
