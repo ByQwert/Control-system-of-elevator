@@ -1,4 +1,8 @@
-.main td {
+#main-table {
+	display: none;
+}
+
+#main-table td {
 	border: 1px solid black;
 	font: 14pt sans-serif;
 }
