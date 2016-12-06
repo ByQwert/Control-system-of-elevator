@@ -34,7 +34,7 @@ dialog = $( "#add-human-form" ).dialog({
   width: 350,
   modal: true,
   buttons: {
-   	"Add account": mainFrame.addHuman, 
+   	"Add human": mainFrame.addHuman, 
     Cancel: function() {
       $( this ).dialog( "close" );
     }
