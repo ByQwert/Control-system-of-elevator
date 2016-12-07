@@ -1,6 +1,6 @@
 // Init
 var settings = {
-	minWeight: 50,
+	minWeight: 25,
 	maxWeight: 100
 };
 var mainFrame = new MainFrame();
@@ -94,12 +94,15 @@ function MainFrame() {
 		var validator = true;
 		name = $("[name=name]").val();
 		weight = +$("[name=weight]").val();
+		if (weight < 25 || isNaN(weight)) {
+			validator = false;
+		}
 		spawnFloor = +$("[name=spawnFloor]").val();
-		if (spawnFloor < 1 || spawnFloor > house.amountOfFloors) {
+		if (spawnFloor < 1 || spawnFloor > house.amountOfFloors || isNaN(spawnFloor)) {
 			validator = false;
 		} 
 		targetFloor = +$("[name=targetFloor]").val(); 
-		if (targetFloor < 1 || targetFloor > house.amountOfFloors || targetFloor == spawnFloor) {
+		if (targetFloor < 1 || targetFloor > house.amountOfFloors || targetFloor == spawnFloor || isNaN(targetFloor)) {
 			validator = false;
 		} 
 		if (validator) {
