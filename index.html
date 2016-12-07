@@ -7,24 +7,27 @@
 </head>
 <div id="generate-form" title="Generate system">
 	<form>
-		Amount of floors:<input type="text" name="floors">
-		<br>
-		Amount of humans:<input type="text" name="humans">
+		<fieldset>
+			<label for="floors">Amount of floors:</label>
+			<input type="text" name="floors">
+			<label for="humans">Amount of humans:</label>
+			<input type="text" name="humans">
+		</fieldset>
 	</form>
 </div>
 <div id="add-human-div" title="Add human"> 
-  <form id="add-human-form">
-    <fieldset>
-      <label for="name">Name</label>
-      <input type="text" name="name">
-      <label for="email">Weight</label>
-      <input type="text" name="weight">
-      <label for="text">Spawn floor</label>
-      <input type="text" name="spawnFloor">
-      <label for="text">Target floor</label>
-      <input type="text" name="targetFloor">
-    </fieldset>
-  </form>
+	<form id="add-human-form">
+		<fieldset>
+			<label for="name">Name</label>
+			<input type="text" name="name">
+			<label for="email">Weight</label>
+			<input type="text" name="weight">
+			<label for="text">Spawn floor</label>
+			<input type="text" name="spawnFloor">
+			<label for="text">Target floor</label>
+			<input type="text" name="targetFloor">
+		</fieldset>
+	</form>
 </div>
 <body>
 	<div>
@@ -47,9 +50,9 @@
 			</tr>
 			<tr>
 				<td id="control-panel" colspan="2">
-				<button onclick="openAddHumanForm()">Add human</button>
-				<button onclick="">Launch system</button>
-				<button onclick="">Stop system</button>
+					<button onclick="openAddHumanForm()">Add human</button>
+					<button onclick="">Launch system</button>
+					<button onclick="">Stop system</button>
 				</td>
 			</tr>
 		</table>
