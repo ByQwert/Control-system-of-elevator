@@ -1,11 +1,17 @@
+// Additional
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 // Init
 var settings = {
 	minWeight: 25,
 	maxWeight: 100
 };
-var mainFrame = new MainFrame();
+var mainFrame = new MainFrame(),
+		statistic = new Statistic();
 var humanity = [],
-names = ["Bob","Tom", "Mike", "Sam", "Jack", "Steve", "Anton"];
+		names = ["Bob","Tom", "Mike", "Sam", "Jack", "Steve", "Anton"];
 var buttonsOfHouse = [],
 		buttonsOfElevator = [];
 
@@ -47,11 +53,6 @@ dialog = $( "#add-human-div" ).dialog({
    },
 });
 
-// Additional
-function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 // Classes
 function MainFrame() {
 	this.generate = function(floors,humans) {
@@ -72,6 +73,8 @@ function MainFrame() {
 			} while(spawnFloor == targetFloor);
 			humanity.push(new Human(name,weight,spawnFloor,targetFloor));
 		}		
+		// Update statistic
+		statistic.amountOfCreatedHumans = house.amountOfHumans;
 		// GUI
 		$("#amount-of-floors").text(house.amountOfFloors);
 		$("#amount-of-humans").text(house.amountOfHumans);		
@@ -106,7 +109,13 @@ function MainFrame() {
 			validator = false;
 		} 
 		if (validator) {
+			// Create new human
 			humanity.push(new Human(name,weight,spawnFloor,targetFloor));
+			house.amountOfHumans++;
+			// Update statistic
+			statistic.amountOfCreatedHumans++;
+			// GUI
+			$("#amount-of-humans").text(house.amountOfHumans);			
 			$("#humanity").append('<h6>' + humanity[humanity.length-1].name + '</h6><p>' + humanity[humanity.length-1].state + humanity[humanity.length-1].spawnFloor + '</p>');
 			$( "#humanity" ).accordion( "refresh" );
 			dialog.dialog("close");
@@ -132,6 +141,11 @@ function Elevator() {
 	this.state = "Staying with closed doors";
 	this.passengers = [];
 	this.chooseNextFloor = function() {
+		for (var i = 0; i < buttonsOfHouse; i++) {
+			if (buttonsOfHouse[i].state) {
+				// TO DO
+			}
+		}
 	};
 	this.wait = function() {
 	};
@@ -166,3 +180,9 @@ function Button(floor) {
 	this.floor = floor;
 }
 
+function Statistic() {
+	this.amountOfRides = 0;
+	this.amountOfEmptyRides = 0;
+	this.sumWeight = 0;
+	this.amountOfCreatedHumans = 0;
+}
