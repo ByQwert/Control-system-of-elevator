@@ -6,6 +6,8 @@ var settings = {
 var mainFrame = new MainFrame();
 var humanity = [],
 names = ["Bob","Tom", "Mike", "Sam", "Jack", "Steve", "Anton"];
+var buttonsOfHouse = [],
+		buttonsOfElevator = [];
 
 // GUI
 $( "#generate-form" ).dialog({
@@ -16,8 +18,8 @@ $( "#generate-form" ).dialog({
 	buttons: {
 		"Generate": function() {
 			if ($('input[name="floors"]').val() > 0 && $('input[name="humans"]').val() > 0) {
-				$( this ).dialog( "close" );
 				mainFrame.generate(+$('input[name="floors"]').val(),+$('input[name="humans"]').val());
+				$( this ).dialog( "close" );				
 			} else {	
 				alert("Invalid data!");
 			}        
@@ -29,10 +31,10 @@ $( "#generate-form" ).dialog({
 });
 
 function openAddHumanForm() {
-	$( "#add-human-form" ).dialog("open");
+	$( "#add-human-div" ).dialog("open");
 }
 
-dialog = $( "#add-human-form" ).dialog({
+dialog = $( "#add-human-div" ).dialog({
   autoOpen: false,
   height: 400,
   width: 350,
@@ -53,9 +55,14 @@ function getRandomInt(min, max) {
 // Classes
 function MainFrame() {
 	this.generate = function(floors,humans) {
+		// Create house, elevator and massives of buttons
 		house = new House(floors,humans);
 		elevator = new Elevator();
-
+		for (var i = 0; i < house.amountOfFloors; i++) {
+			buttonsOfHouse.push(new Button(i+1));
+			buttonsOfElevator.push(new Button(i+1));
+		}
+		// Create humans
 		for (var i = 0; i < house.amountOfHumans; i++) {
 			name = names[getRandomInt(0,names.length-1)];
 			weight = getRandomInt(settings.minWeight,settings.maxWeight);
@@ -100,6 +107,7 @@ function MainFrame() {
 			$("#humanity").append('<h6>' + humanity[humanity.length-1].name + '</h6><p>' + humanity[humanity.length-1].state + humanity[humanity.length-1].spawnFloor + '</p>');
 			$( "#humanity" ).accordion( "refresh" );
 			dialog.dialog("close");
+			$("#add-human-form")[0].reset();
 		} else {
 			alert("Invalid data!");
 			validator = true;
@@ -133,10 +141,25 @@ function Human(name, weight, spawnFloor, targetFloor) {
 	this.weight = weight;
 	this.spawnFloor = spawnFloor;
 	this.targetFloor = targetFloor;		
+	this.pressSpawnFloorButton = function() {
+		if (!buttonsOfHouse[spawnFloor-1].state) {
+			buttonsOfHouse[spawnFloor-1].state = true;
+		}		
+	}
+	this.pressTargetFloorButton = function() {
+		if (!buttonsOfElevator[targetFloor-1].state) {
+			buttonsOfElevator[targetFloor-1].state = true;
+		}
+	}
 	this.pressMoveButton = function() {
 	};
 	this.wait = function() {
 	}
 	this.state = "Waiting for elevator on floor ";
+}
+
+function Button(floor) {
+	this.state = false;
+	this.floor = floor;
 }
 
