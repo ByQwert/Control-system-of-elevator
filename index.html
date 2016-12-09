@@ -6,31 +6,31 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
 </head>
-<div id="generate-form" title="Generate system">
-	<form>
-		<fieldset>
-			<label for="floors">Amount of floors:</label>
-			<input type="text" name="floors">
-			<label for="humans">Amount of humans:</label>
-			<input type="text" name="humans">
-		</fieldset>
-	</form>
-</div>
-<div id="add-human-div" title="Add human"> 
-	<form id="add-human-form">
-		<fieldset>
-			<label for="name">Name</label>
-			<input type="text" name="name">
-			<label for="email">Weight</label>
-			<input type="text" name="weight">
-			<label for="text">Spawn floor</label>
-			<input type="text" name="spawnFloor">
-			<label for="text">Target floor</label>
-			<input type="text" name="targetFloor">
-		</fieldset>
-	</form>
-</div>
 <body>
+	<div id="generate-form" title="Generate system">
+		<form>
+			<fieldset>
+				<label for="floors">Amount of floors:</label>
+				<input type="text" name="floors">
+				<label for="humans">Amount of humans:</label>
+				<input type="text" name="humans">
+			</fieldset>
+		</form>
+	</div>
+	<div id="add-human-div" title="Add human"> 
+		<form id="add-human-form">
+			<fieldset>
+				<label for="name">Name</label>
+				<input type="text" name="name">
+				<label for="email">Weight</label>
+				<input type="text" name="weight">
+				<label for="text">Spawn floor</label>
+				<input type="text" name="spawnFloor">
+				<label for="text">Target floor</label>
+				<input type="text" name="targetFloor">
+			</fieldset>
+		</form>
+	</div>
 	<div>
 		<table id="main-table">
 			<tr>
@@ -45,14 +45,19 @@
 							<td id="amount-of-humans"></td>
 						</tr>
 					</table>
-					<div id="humanity"></div>
+					<hr>
+					Pending:
+					<div id="pending"></div>
+					<hr>
+					Passengers:
+					<div id="passengers"></div>
 				</td>
 				<td id="animation">Animation</td>
 			</tr>
 			<tr>
 				<td id="control-panel" colspan="2">
 					<button onclick="openAddHumanForm()">Add human</button>
-					<button onclick="">Launch system</button>
+					<button onclick="launchSystem()">Launch system</button>
 					<button onclick="">Stop system</button>
 				</td>
 			</tr>
