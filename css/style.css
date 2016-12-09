@@ -32,12 +32,22 @@
 	border-width: 0px;
 }
 
-#humanity {
+#pending {
 	width: 100%;
-	height: 85%;
+	height: 50%;
 	overflow: auto;
 }
 
-#humanity p {
+#pending p {
+  font: 12pt sans-serif; 
+}
+
+#passengers {
+	width: 100%;
+	height: 35%;
+	overflow: auto;
+}
+
+#passengers p {
   font: 12pt sans-serif; 
 }
