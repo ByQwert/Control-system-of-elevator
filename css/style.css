@@ -9,14 +9,14 @@
 
 #stats {
 	width: 250px;
-	height: 500px;
+	height: 800px;
 	text-align: left;
 	vertical-align: top;
 }
 
 #animation {
 	width: 400px;
-	height: 500px;
+	height: 800px;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -34,7 +34,7 @@
 
 #pending {
 	width: 100%;
-	height: 50%;
+	height: 30%;
 	overflow: auto;
 }
 
@@ -44,10 +44,20 @@
 
 #passengers {
 	width: 100%;
-	height: 35%;
+	height: 30%;
 	overflow: auto;
 }
 
 #passengers p {
+  font: 12pt sans-serif; 
+}
+
+#delivered {
+	width: 100%;
+	height: 30%;
+	overflow: auto;
+}
+
+#delivered p {
   font: 12pt sans-serif; 
 }
