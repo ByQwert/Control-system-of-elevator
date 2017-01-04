@@ -56,12 +56,10 @@
 					<div id="delivered"></div>
 				</td>
 				<td id="animation">Animation</td>
-			</tr>
-			<tr>
-				<td id="control-panel" colspan="2">
-					<button onclick="openAddHumanForm()" disabled>Add human</button>
+				<td id="control-panel">
+					<button onclick="openAddHumanForm()">Add human</button>
 					<button onclick="mainFrame.launchSystem()">Launch system</button>
-					<button onclick="">Stop system</button>
+					<button onclick="mainFrame.stopSystem()" disabled>Stop system</button>
 				</td>
 			</tr>
 		</table>

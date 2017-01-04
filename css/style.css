@@ -1,5 +1,7 @@
 #main-table {
 	display: none;
+	width: 100%;
+	height: 100%;
 }
 
 #main-table td {
@@ -8,22 +10,18 @@
 }
 
 #stats {
-	width: 250px;
-	height: 800px;
 	text-align: left;
 	vertical-align: top;
 }
 
 #animation {
-	width: 400px;
-	height: 800px;
+	width: 50%;
 	text-align: center;
-	vertical-align: middle;
+	vertical-align: middle;	
 }
 
 #control-panel {
-	width: 650px;
-	height: 100px;
+	width: 25%;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -34,8 +32,8 @@
 
 #pending {
 	width: 100%;
-	height: 30%;
 	overflow: auto;
+	height:175px;
 }
 
 #pending p {
@@ -44,8 +42,8 @@
 
 #passengers {
 	width: 100%;
-	height: 30%;
 	overflow: auto;
+	height:175px;
 }
 
 #passengers p {
@@ -54,8 +52,8 @@
 
 #delivered {
 	width: 100%;
-	height: 30%;
 	overflow: auto;
+	height:175px;
 }
 
 #delivered p {
