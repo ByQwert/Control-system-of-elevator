@@ -17,7 +17,22 @@
 #animation {
 	width: 50%;
 	text-align: center;
-	vertical-align: middle;	
+	vertical-align: top;	
+}
+
+#animation-text {
+ width: 744.4px;
+ height: 50px;
+}
+
+#animation-cabin {
+	height:500px;
+	width: 372.2px;
+}
+
+#test {
+	height: 500px;
+	width: 372.2px;
 }
 
 #control-panel {
@@ -33,7 +48,7 @@
 #pending {
 	width: 100%;
 	overflow: auto;
-	height:175px;
+	height:169px;
 }
 
 #pending p {
@@ -43,7 +58,7 @@
 #passengers {
 	width: 100%;
 	overflow: auto;
-	height:175px;
+	height:169px;
 }
 
 #passengers p {
@@ -53,9 +68,20 @@
 #delivered {
 	width: 100%;
 	overflow: auto;
-	height:175px;
+	height:169px;
 }
 
 #delivered p {
   font: 12pt sans-serif; 
+}
+
+#status-bar-table {
+	width: 100%;
+}
+
+#status-bar-table td {
+	border: 0px solid black;
+	font: 12pt sans-serif; 
+	max-height: 26.4px;
+	width:33%;
 }

@@ -55,11 +55,32 @@
 					Delivered:
 					<div id="delivered"></div>
 				</td>
-				<td id="animation">Animation</td>
+				<td id="animation">
+					<table>
+						<tr>
+							<td id="animation-text" colspan="2">Indicator Off</td>
+						</tr>
+						<tr>
+							<td id="animation-cabin">2</td>
+							<td id="test">3</td>
+						</tr>
+					</table>
+				</td>
 				<td id="control-panel">
 					<button onclick="openAddHumanForm()">Add human</button>
 					<button onclick="mainFrame.launchSystem()">Launch system</button>
 					<button onclick="mainFrame.stopSystem()" disabled>Stop system</button>
+				</td>
+			</tr>
+			<tr>
+				<td id="status-bar" colspan="3">
+					<table id="status-bar-table">
+						<tr>
+							<td>Amount of moving elevators: <span id="amount-of-moving">0</span></td>
+							<td>Amount of stopped elevators: <span id="amount-of-stopped">1</span></td>
+							<td>Total amount of moved humans by elevator: <span id="amount-of-moved">0</span></td>
+						</tr>
+					</table>
 				</td>
 			</tr>
 		</table>
