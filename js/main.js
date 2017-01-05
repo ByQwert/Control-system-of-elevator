@@ -11,7 +11,7 @@ function sleep(ms) {
 var settings = {
 	minWeight: 25,
 	maxWeight: 100,
-	speed: 1000,
+	speed: 2500,
 };
 var mainFrame = new MainFrame(),
 		statistic = new Statistic();
@@ -103,15 +103,22 @@ function MainFrame() {
 	this.launchSystem = function() {
 		this.state = "Working";
 		statistic.amountOfCreatedHumans = house.amountOfHumans;
-		elevator.chooseNextFloor();
+		// GUI		
 		$("[onclick=mainFrame\\.launchSystem\\(\\)]").prop('disabled', true);
 		$("[onclick=mainFrame\\.stopSystem\\(\\)]").prop('disabled', false);
+		$("#amount-of-moving").text("1");
+		$("#amount-of-stopped").text("0");
+		elevator.chooseNextFloor();
 	};
 	this.stopSystem = function() {
 		if (!buttonsOfElevator.some(function(button) {return button.state == true }) && elevator.doorsState == false) {
 			this.state = "Stopped";
+			// GUI
 			$("[onclick=mainFrame\\.stopSystem\\(\\)]").prop('disabled', true);
 			$("[onclick=mainFrame\\.launchSystem\\(\\)]").prop('disabled', false);
+			$("#amount-of-moving").text("0");
+			$("#amount-of-stopped").text("1");
+			// Statistic
 			alert("Total amount of rides: " + statistic.amountOfRides + "\nAmount of empty rides: " + statistic.amountOfEmptyRides + "\nTotal moved weight: " + statistic.sumWeight + "\nTotal amount of humans: " + statistic.amountOfCreatedHumans);
 			statistic.amountOfRides = 0;
 			statistic.amountOfEmptyRides = 0;
@@ -148,7 +155,7 @@ function MainFrame() {
 			$( "#pending" ).accordion( "refresh" );
 			dialog.dialog("close");
 			$("#add-human-form")[0].reset();
-			if (!buttonsOfElevator.some(function(button) {return button.state == true }) && elevator.state == "Staying with closed doors" && (mainFrame.state == "Stopped" || mainFrame.state == "Waiting")) {
+			if (!buttonsOfElevator.some(function(button) {return button.state == true }) && elevator.state == "Staying with closed doors" && mainFrame.state == "Waiting") {
 				elevator.chooseNextFloor();
 			}
 		} else {
@@ -166,9 +173,9 @@ function House(floors,humans) {
 }
 
 function Elevator() {
-	this.currentWeight;
+	this.currentWeight = 0;
 	this.targetFloor;
-	this.indicatorState;
+	this.indicatorState = false;
 	this.currentFloor = 1;
 	this.doorsState = false;
 	this.state = "Staying with closed doors";
@@ -178,8 +185,8 @@ function Elevator() {
 		if (buttonsOfElevator.some(function(button) {return button.state == true })) {
 			for (var i = 0; i < buttonsOfElevator.length; i++) {
 				if (buttonsOfElevator[i].state) {
-					if (Math.abs(this.currentFloor-i) <= this.priorityDistance) {
-						this.priorityDistance = Math.abs(this.currentFloor-i);
+					if (Math.abs(this.currentFloor-i-1) <= this.priorityDistance) {
+						this.priorityDistance = Math.abs(this.currentFloor-i-1);
 						this.targetFloor = i+1;
 					}
 				}
@@ -196,8 +203,8 @@ function Elevator() {
 							this.targetFloor = i+1;
 							break;
 						} else {
-							if (Math.abs(this.currentFloor-i) <= this.priorityDistance) {
-								this.priorityDistance = Math.abs(this.currentFloor - i);
+							if (Math.abs(this.currentFloor-i-1) <= this.priorityDistance) {
+								this.priorityDistance = Math.abs(this.currentFloor-i-1);
 								this.targetFloor = i+1;
 							}
 						}					
@@ -216,14 +223,14 @@ function Elevator() {
 			if (this.currentFloor == this.targetFloor) {
 				this.doorsState = true;
 				this.state = "Staying with opened doors";	
-				$("#animation").html(this.state + "<br>" + this.currentFloor);
+				$("#animation-text").html(this.state + "<br>" + this.currentFloor);
 				this.wait();
 			}					
 			// Moving up
 			if (this.currentFloor < this.targetFloor) {
 				statistic.amountOfRides++;
 				this.state = "Moving up";		
-				$("#animation").html(this.state + "<br>" + this.currentFloor);
+				$("#animation-text").html(this.state + "<br>" + this.currentFloor);
 				if (this.passengers.length > 0) {
 					this.passengers.forEach(function(human) {
 						human.state = "Moving up at the level of the floor " +  elevator.currentFloor;
@@ -235,7 +242,7 @@ function Elevator() {
 				for (var i = this.currentFloor+1; i != this.targetFloor+1; i++) {	
 					this.currentFloor = i;
 					if (i != this.targetFloor) {
-						$("#animation").html(this.state + "<br>" + this.currentFloor);
+						$("#animation-text").html(this.state + "<br>" + this.currentFloor);
 						if (this.passengers.length > 0) {
 							this.passengers.forEach(function(human) {
 								human.state = "Moving up at the level of the floor " +  elevator.currentFloor;
@@ -250,7 +257,7 @@ function Elevator() {
 						this.doorsState = true;
 						this.state = "Staying with opened doors";	
 						// Animation
-						$("#animation").html(this.state + "<br>" + this.currentFloor);
+						$("#animation-text").html(this.state + "<br>" + this.currentFloor);
 						// GUI
 						this.passengers.forEach(function(human) {
 							human.state = "Moving up at the level of the floor " +  elevator.currentFloor;
@@ -268,7 +275,7 @@ function Elevator() {
 			if (this.currentFloor > this.targetFloor) {
 				statistic.amountOfRides++;
 				this.state = "Moving down";
-				$("#animation").html(this.state + "<br>" + this.currentFloor);
+				$("#animation-text").html(this.state + "<br>" + this.currentFloor);
 				if (this.passengers.length > 0) {
 					this.passengers.forEach(function(human) {
 						human.state = "Moving down at the level of the floor " +  elevator.currentFloor;
@@ -280,7 +287,7 @@ function Elevator() {
 				for (var i = this.currentFloor-1; i != this.targetFloor-1; i--) {
 					this.currentFloor = i;
 					if (i != this.targetFloor) {
-						$("#animation").html(this.state + "<br>" + this.currentFloor);	
+						$("#animation-text").html(this.state + "<br>" + this.currentFloor);	
 						if (this.passengers.length > 0) {
 							this.passengers.forEach(function(human) {
 								human.state = "Moving down at the level of the floor " +  elevator.currentFloor;
@@ -293,7 +300,7 @@ function Elevator() {
 						this.doorsState = true;
 						this.state = "Staying with opened doors";
 						// Animation
-						$("#animation").html(this.state + "<br>" + this.currentFloor);
+						$("#animation-text").html(this.state + "<br>" + this.currentFloor);
 						// GUI
 						this.passengers.forEach(function(human) {
 							human.state = "Moving down at the level of the floor " +  elevator.currentFloor;
@@ -311,28 +318,29 @@ function Elevator() {
 	};
 	this.wait =  async function() {
 		if (mainFrame.state != "Stopped") {
-			await sleep(1000);
 			// Exit
 			j = 0;
 			if (this.passengers.length) {
-				this.passengers.forEach(function(human,i) {			
-					if (human.targetFloor == elevator.currentFloor) {
-						human.state = "Delivered to the target floor " + human.targetFloor;
-						house.delivered.push(human);
-						delete elevator.passengers[i];
-						buttonsOfElevator[human.targetFloor-1].state = false;
+				for (i = 0; i < elevator.passengers.length; i++) {
+					if (elevator.passengers[i].targetFloor == elevator.currentFloor) {
+						elevator.passengers[i].state = "Delivered to the target floor " + elevator.passengers[i].targetFloor;
+						house.delivered.push(elevator.passengers[i]);						
+						elevator.currentWeight -= elevator.passengers[i].weight;
+						buttonsOfElevator[elevator.passengers[i].targetFloor-1].state = false;
 						// GUI
 						$("#delivered").append('<h6>' + house.delivered[j].name + '</h6><p id=' + house.delivered[j].ID + '>' + house.delivered[j].state + '</p>');
 						$( "#delivered" ).accordion( "refresh" );
-						$("#passengers").children('[aria-controls=' + human.ID + ']').remove();
-						$("#passengers").children('#' + human.ID).remove();
+						$("#passengers").children('[aria-controls=' + elevator.passengers[i].ID + ']').remove();
+						$("#passengers").children('#' + elevator.passengers[i].ID).remove();
 						$( "#passengers" ).accordion( "refresh" );
 						j++;
+						delete elevator.passengers[i];
+						await sleep(500);
 					}
-				});
+				}
 				this.passengers = this.passengers.filter(function(human) {
 					return human != "undefined";
-				});	
+				});
 				setTimeout(function() { 
 					house.amountOfHumans -= house.delivered.length;
 					house.delivered.splice(0);
@@ -343,31 +351,55 @@ function Elevator() {
 			}			
 			// Entrance
 			j = this.passengers.length;
-			house.pending.forEach(function(human, i) {
-				//console.log(human.spawnFloor, elevator.currentFloor);
-				if (human.spawnFloor == elevator.currentFloor) {
-					human.state = "Staying in elevator on " + elevator.currentFloor + " floor";
-					elevator.passengers.push(human);
-					delete house.pending[i];
-					buttonsOfHouse[human.spawnFloor-1].state = false;
-					human.pressTargetFloorButton();
-					// Statistic
-					statistic.sumWeight=+human.weight;
-					// GUI 
+			for (i = 0; i < house.pending.length; i++) {
+				if (house.pending[i].spawnFloor == elevator.currentFloor) {
+					elevator.passengers.push(house.pending[i]);
+					elevator.currentWeight += house.pending[i].weight;	
+					house.pending[i].state = "Staying in elevator on " + elevator.currentFloor + " floor";							
+					// GUI
 					$("#passengers").append('<h6>' + elevator.passengers[j].name + '</h6><p id=' + elevator.passengers[j].ID + '>' + elevator.passengers[j].state + '</p>');
-					$( "#passengers" ).accordion( "refresh" );
-					$("#pending").children('[aria-controls=' + human.ID + ']').remove();
-					$("#pending").children('#' + human.ID).remove();
-					$( "#pending" ).accordion( "refresh" );
-					j++;
+					$("#passengers").accordion("refresh");
+					$("#pending").children('[aria-controls=' + house.pending[i].ID + ']').remove();
+					$("#pending").children('#' + house.pending[i].ID).remove();
+					$("#pending").accordion("refresh");					
+					if (elevator.currentWeight >= 400) {
+						elevator.indicatorState = true;
+						// REALIZE LED GUI
+						console.log("Overload!");			
+						$("#animation-cabin").text("Indicator On");		
+						// GUI
+						$("#pending").append('<h6>' + elevator.passengers[j].name + '</h6><p id=' + elevator.passengers[j].ID + '>' + elevator.passengers[j].state + '</p>');
+						$("#pending").accordion("refresh");						
+						$("#passengers").children('[aria-controls=' + house.pending[i].ID + ']').remove();
+						$("#passengers").children('#' + house.pending[i].ID).remove();
+						$("#passengers").accordion( "refresh" );
+						await sleep(500);
+						elevator.passengers.splice(-1,1);
+						elevator.currentWeight -= house.pending[i].weight;
+						house.pending[i].pressSpawnFloorButton();
+						elevator.indicatorState = false;
+						$("#animation-cabin").text("Indicator Off");	
+						j--;
+					} else {		
+						await sleep(500);				
+						buttonsOfHouse[house.pending[i].spawnFloor-1].state = false;
+						house.pending[i].pressTargetFloorButton();
+						// Statistic
+						statistic.sumWeight += house.pending[i].weight;
+						statistic.amountOfMovedHumans++;
+						delete house.pending[i];
+						// GUI 
+						$("#amount-of-moved").text(statistic.amountOfMovedHumans);
+					}		
+					j++;			
 				}
-			});
+			}
 			house.pending = house.pending.filter(function(human) {
 				return human != "undefined";
 			});
 			this.doorsState = false;
 			this.state = "Staying with closed doors";	
-			$("#animation").html(this.state + "<br>" + this.currentFloor);
+			$("#animation-text").html(this.state + "<br>" + this.currentFloor);
 			this.chooseNextFloor();
 		}
 	}
@@ -407,4 +439,5 @@ function Statistic() {
 	this.amountOfEmptyRides = 0;
 	this.sumWeight = 0;
 	this.amountOfCreatedHumans = 0;
+	this.amountOfMovedHumans = 0;
 }
