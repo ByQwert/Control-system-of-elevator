@@ -11,7 +11,7 @@ Buttons can be in 2 states:
 * Pressed
 * Depressed
 
-On each floor there is a elevator ***"Call"*** button. After pressing the ***"Call"*** button, the button is in the state *"Pressed"* until the elevator stop on this floor.
+On each floor there is an elevator ***"Call"*** button. After pressing the ***"Call"*** button, the button is in the state *"Pressed"* until the elevator stop on this floor.
 
 ## Elevator
 
