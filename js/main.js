@@ -156,6 +156,9 @@ function MainFrame() {
 			dialog.dialog("close");
 			$("#add-human-form")[0].reset();
 			if (!buttonsOfElevator.some(function(button) {return button.state == true }) && elevator.state == "Staying with closed doors" && mainFrame.state == "Waiting") {
+				// GUI
+				$("#amount-of-moving").text("1");
+				$("#amount-of-stopped").text("0");
 				elevator.chooseNextFloor();
 			}
 		} else {
@@ -215,6 +218,9 @@ function Elevator() {
 				this.move();
 			} else {
 				mainFrame.state = "Waiting";
+				// GUI
+				$("#amount-of-moving").text("0");
+				$("#amount-of-stopped").text("1");
 			}
 		}	
 	};
