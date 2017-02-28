@@ -9,7 +9,7 @@ _N_-storey building.
 
 Buttons can be in 2 states:
 * Pressed
-* Depressed
+* Released
 
 On each floor there is an elevator ***"Call"*** button. After pressing the ***"Call"*** button, the button is in the state *"Pressed"* until the elevator stop on this floor.
 
@@ -33,11 +33,11 @@ Elevator should not start moving, if the total weight exceeds 400 kg. If the tot
 
 Buttons can be in 2 states:
 * Pressed
-* Depressed
+* Released
 
 _N_ buttons of numbered floors in the elevator.
 
-At each time multiple buttons can be in state *"Pressed"*. After reaching the target floor button takes state *"Depressed"*.
+At each time multiple buttons can be in state *"Pressed"*. After reaching the target floor button takes state *"Released"*.
 
 ***"Move"*** button initiates the movement of the elevator. ***"Move"*** button doesn't have state *"Pressed"*.
 
